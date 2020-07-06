@@ -1,8 +1,15 @@
 [org 0x7c00]  ; boot sector starts at this location
 mov si, STR  ; It is used as source index for string operations.
-
-
 call print
+
+mov si, STR0
+call print
+
+mov si, STR1
+call print
+
+
+
 jmp $ ; infinite wait after print is done
 
 print:
@@ -26,7 +33,8 @@ print_char:      ; prints the char present at si
 
 
 
-STR: db "Hello God" , 0 ; db literally places that byte right there in the executable.
-
+STR: db "Hello Code" , 0xd, 0 ; db literally places that byte right there in the executable.
+STR0: db "This is Atr-OS 1.0",0x0a, 0x0d, 0
+STR1: db "Learning Right Now..."
 times 510-($-$$) db 0 ; padding and magic number
 dw 0xaa55
