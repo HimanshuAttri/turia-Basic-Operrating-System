@@ -2,6 +2,31 @@
 
 
 [org 0x7c00]  ;default space for boot sector starts at this location
+[bits 16]
+
+section .text
+    global main
+
+main:
+
+jmp 0x0000: ZeroSeg
+
+ZeroSeg:
+    xor ax,ax ; ax xor ax =0 ax <- 0 2 byte code fewer then mov ax,0
+    mov ss,ax ; setting resiters to 0
+    mov ds, ax ; to make sure bios isnt busyie. not segmenting
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov sp, main  ; stack pointer to entry point
+    cld ; clear flag read string left to right higher to lower addr
+    sti
+
+push ax
+xor ax, ax
+int 0x13
+pop ax
+
 mov si, STR  ; It is used as source index for string operations.
 call print
 
