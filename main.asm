@@ -40,7 +40,9 @@ mov al , 1 ; no of sectors to read
 mov cl , 2 ; bootloader is at sector 1 so we choose latter
     
 call readDisk
-jmp test_sector2
+mov dx,[0x7c00 + 510]; printh prints magic number
+call printh
+
 
 
 
@@ -48,7 +50,7 @@ jmp $ ; infinite wait after print is done
 
 %include "print.asm"   ; cannot be above the first print call
 %include "readDisk.asm" ; includes containing function must be included below the first fuction call
-                         
+%include "printh.asm"                   
 
 STR: db "Hello Code" , 0x0a, 0xd, 0 ; db literally places that byte right there in the executable.
 ;STR0: db "This is Atr-OS 1.0",0x0a, 0x0d, 0
